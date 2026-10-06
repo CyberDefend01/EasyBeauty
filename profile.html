@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Profile — EasyBeauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="find.html">Find a Pro</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="notFound" class="hidden">
+  <div class="container section center">
+    <h2>Professional not found</h2>
+    <p>This profile may have been removed.</p>
+    <a href="find.html" class="btn btn-primary">Back to Search</a>
+  </div>
+</div>
+
+<div id="profileContent">
+  <header class="bg-blush">
+    <div class="container profile-header">
+      <div class="profile-photo"><img id="proPhoto" src="" alt=""></div>
+      <div class="profile-meta">
+        <span class="service-tag" id="proService"></span>
+        <h1 id="proName"></h1>
+        <div class="loc" id="proLocation"></div>
+        <div class="price" id="proPrice"></div>
+        <div class="rating-line" id="proRating"></div>
+        <div class="profile-actions">
+          <a href="#" class="btn btn-primary" id="bookNowBtn">Book Now</a>
+          <a href="#" class="btn btn-whatsapp" id="whatsappBtn" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2>About</h2>
+      <p id="proDescription"></p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <h2>Portfolio</h2>
+      <div class="gallery" id="proGallery"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+        <h2 class="mt-0">Reviews</h2>
+        <button class="btn btn-outline btn-sm" id="showReviewFormBtn" type="button">Leave a Review</button>
+      </div>
+
+      <div class="card hidden" id="reviewFormCard" style="margin-bottom:24px;">
+        <h3 style="margin-top:0;">Share your experience</h3>
+        <form id="reviewForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="reviewerName">Your Name</label>
+              <input type="text" id="reviewerName" required placeholder="e.g. Amaka O.">
+            </div>
+            <div class="field">
+              <label>Your Rating</label>
+              <div class="star-input" id="starInput">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+              </div>
+              <input type="hidden" id="reviewRating" value="5">
+            </div>
+            <div class="field">
+              <label for="reviewComment">Comment</label>
+              <textarea id="reviewComment" rows="3" required placeholder="How was your appointment?"></textarea>
+            </div>
+          </div>
+          <div style="margin-top:16px; display:flex; gap:10px;">
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+            <button type="button" class="btn btn-outline" id="cancelReviewBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card" id="reviewsList"></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+      <p>Helping women in Nigeria find trusted beauty professionals — starting in Gombe State.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="find.html">Find a Pro</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="signin.html">Sign In</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+  <p class="foot-bottom">© 2026 EasyBeauty. Built as an MVP for validation purposes.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

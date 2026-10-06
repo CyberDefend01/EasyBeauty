@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Now — EasyBeauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="find.html">Find a Pro</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="notFound" class="hidden">
+  <div class="container section center">
+    <h2>Professional not found</h2>
+    <a href="find.html" class="btn btn-primary">Back to Search</a>
+  </div>
+</div>
+
+<div id="bookingContent">
+  <header class="hero" style="padding:36px 0 24px;">
+    <div class="container">
+      <h1 style="font-size:clamp(1.5rem,4vw,2.2rem);">Book Your Appointment</h1>
+      <p class="lead" style="margin-bottom:0;">Fill in your details and we'll pass your request straight to the professional.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top:28px;">
+    <div class="container" style="max-width:640px;">
+
+      <div class="booking-summary" id="proSummary"></div>
+
+      <form id="bookingForm">
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label for="custName">Full Name</label>
+            <input type="text" id="custName" required placeholder="e.g. Hauwa Ibrahim">
+          </div>
+          <div class="field">
+            <label for="custPhone">Phone Number</label>
+            <input type="tel" id="custPhone" required placeholder="e.g. 08012345678">
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:16px;">
+          <label for="serviceRequired">Service Required</label>
+          <select id="serviceRequired" required></select>
+        </div>
+
+        <div class="form-grid cols-2" style="margin-top:16px;">
+          <div class="field">
+            <label for="prefDate">Preferred Date</label>
+            <input type="date" id="prefDate" required>
+          </div>
+          <div class="field">
+            <label for="prefTime">Preferred Time</label>
+            <input type="time" id="prefTime" required>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:16px;">
+          <label for="custNotes">Additional Notes (optional)</label>
+          <textarea id="custNotes" rows="3" placeholder="Any details the professional should know"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:22px;">Submit Booking Request</button>
+        <p class="form-note center" style="margin-top:12px;">This sends a booking request. You can also message the professional directly on WhatsApp to confirm.</p>
+      </form>
+
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+      <p>Helping women in Nigeria find trusted beauty professionals — starting in Gombe State.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="find.html">Find a Pro</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="signin.html">Sign In</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+  <p class="foot-bottom">© 2026 EasyBeauty. Built as an MVP for validation purposes.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/booking.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — EasyBeauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="find.html">Find a Pro</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="signin.html" class="active">Sign In</a></li>
+      <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" style="padding:40px 0 24px;">
+  <div class="container">
+    <h1 style="font-size:clamp(1.6rem,4vw,2.3rem);">Welcome back</h1>
+    <p class="lead" style="margin-bottom:0;">Sign in with your email and password.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:28px;">
+  <div class="container" style="max-width:480px;">
+
+    <div id="configBanner" class="banner banner-warn hidden">
+      EasyBeauty isn't connected to a database yet, so sign-in isn't available right now. If you're the site owner, see <strong>BEGINNER_SETUP_GUIDE.md</strong>.
+    </div>
+
+    <div class="card auth-card" style="max-width:100%;">
+
+      <!-- View 1: email + password -->
+      <div id="viewLogin">
+        <div id="loginError" class="banner banner-error hidden"></div>
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="field" style="margin-top:14px;">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" required placeholder="Your password" autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;" id="loginSubmitBtn">Sign In</button>
+        </form>
+        <p class="form-note center" style="margin-top:14px;">
+          <a href="#" id="showForgotBtn" style="color:var(--rose-dark); font-weight:600; text-decoration:underline;">Forgot your password?</a>
+        </p>
+        <p class="form-note center" style="margin-top:6px;">
+          New here? <a href="signup.html" style="color:var(--rose-dark); font-weight:600; text-decoration:underline;">Create an account</a>
+        </p>
+      </div>
+
+      <!-- View 2: forgot password — request a reset link -->
+      <div id="viewForgot" class="hidden">
+        <div id="forgotError" class="banner banner-error hidden"></div>
+        <h2 style="font-size:1.3rem;">Reset your password</h2>
+        <p>Enter your email and we'll send you a link to choose a new password.</p>
+        <form id="forgotForm">
+          <div class="field">
+            <label for="forgotEmail">Email</label>
+            <input type="email" id="forgotEmail" required placeholder="you@example.com" autocomplete="email">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;" id="forgotSubmitBtn">Send reset link</button>
+        </form>
+        <p class="form-note center" style="margin-top:14px;">
+          <a href="#" id="backToLoginBtn" style="color:var(--rose-dark); font-weight:600; text-decoration:underline;">Back to sign in</a>
+        </p>
+      </div>
+
+      <!-- View 3: reset link sent -->
+      <div id="viewResetSent" class="success-box hidden">
+        <div class="confirm-icon">✉</div>
+        <h2>Check your email</h2>
+        <p>If an account exists for <strong id="resetSentTo"></strong>, a reset link is on its way. The link expires in one hour.</p>
+        <button class="btn btn-outline" id="resetDoneBtn" type="button">Back to sign in</button>
+      </div>
+
+      <!-- View 4: choose a new password (opened from the reset link) -->
+      <div id="viewNewPassword" class="hidden">
+        <div id="newPasswordError" class="banner banner-error hidden"></div>
+        <h2 style="font-size:1.3rem;">Choose a new password</h2>
+        <form id="newPasswordForm">
+          <div class="field">
+            <label for="newPassword">New password</label>
+            <input type="password" id="newPassword" required minlength="8" placeholder="At least 8 characters" autocomplete="new-password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;" id="newPasswordBtn">Save new password</button>
+        </form>
+      </div>
+
+      <!-- View 5: signed in -->
+      <div id="viewSignedIn" class="success-box hidden">
+        <div class="confirm-icon">✓</div>
+        <h2>You're signed in</h2>
+        <p>Signed in as <strong id="signedInEmail"></strong></p>
+        <div class="hero-actions">
+          <a href="find.html" class="btn btn-primary">Find a Beauty Professional</a>
+          <a href="feedback.html" class="btn btn-outline">Give Feedback</a>
+        </div>
+        <p style="margin-top:20px;"><button class="btn btn-outline btn-sm" id="signOutBtn" type="button">Sign out</button></p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+      <p>Helping women in Nigeria find trusted beauty professionals — starting in Gombe State.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="find.html">Find a Pro</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="signin.html">Sign In</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+  <p class="foot-bottom">© 2026 EasyBeauty. Built as an MVP for validation purposes.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/signin.js"></script>
+</body>
+</html>

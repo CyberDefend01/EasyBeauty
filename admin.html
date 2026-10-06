@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — EasyBeauty</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><span style="padding:8px 14px; font-weight:600; color:var(--rose-dark);">Admin Dashboard</span></li>
+    </ul>
+    <div style="display:flex; gap:8px;">
+      <a href="setup-check.html" class="btn btn-outline btn-sm">Setup Check</a>
+      <button class="btn btn-outline btn-sm" id="logoutBtn" type="button">Log Out</button>
+    </div>
+  </div>
+</nav>
+
+<section class="section">
+  <div class="container">
+
+    <div id="loadingState" class="center" style="padding:60px 0;">
+      <p>Loading dashboard...</p>
+    </div>
+
+    <div id="dashboardContent" class="hidden">
+
+      <div class="admin-section-head">
+        <h1 style="margin:0; font-size:1.7rem;">Overview</h1>
+        <button class="btn btn-primary btn-sm" id="exportAllBtn" type="button">Export All Data to Excel</button>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="value" id="statTotalUsers">0</div>
+          <div class="label">Total Registered Users</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="statCustomers">0</div>
+          <div class="label">Customers</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="statProfessionals">0</div>
+          <div class="label">Beauty Professionals</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="statFeedback">0</div>
+          <div class="label">Feedback Submissions</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="statAvgRating">—</div>
+          <div class="label">Average Feedback Rating</div>
+        </div>
+      </div>
+
+      <div class="admin-section-head">
+        <h2 style="margin:0;">Users</h2>
+        <button class="btn btn-outline btn-sm" id="exportUsersBtn" type="button">Export Users to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>User Type</th>
+              <th>Registration Date</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+        <p class="center" id="usersEmptyState" style="padding:24px; margin:0; display:none;">No sign-ups yet.</p>
+      </div>
+
+      <div class="admin-section-head">
+        <h2 style="margin:0;">Feedback</h2>
+        <button class="btn btn-outline btn-sm" id="exportFeedbackBtn" type="button">Export Feedback to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Feedback Type</th>
+              <th>Rating</th>
+              <th>Feedback</th>
+              <th>Date Submitted</th>
+            </tr>
+          </thead>
+          <tbody id="feedbackTableBody"></tbody>
+        </table>
+        <p class="center" id="feedbackEmptyState" style="padding:24px; margin:0; display:none;">No feedback yet.</p>
+      </div>
+
+    </div>
+
+    <div id="errorState" class="hidden">
+      <div class="banner banner-error" style="max-width:520px; margin:40px auto;" id="errorMessage"></div>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/excelExport.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

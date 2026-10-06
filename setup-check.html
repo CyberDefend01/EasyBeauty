@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setup Check — EasyBeauty</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="admin.html">Admin Dashboard</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" style="padding:40px 0 24px;">
+  <div class="container">
+    <h1 style="font-size:clamp(1.6rem,4vw,2.2rem);">Setup Check</h1>
+    <p class="lead" style="margin-bottom:0;">Checks whether EasyBeauty is correctly connected to Supabase — no fake sign-ups or feedback are ever created by this page.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:24px;">
+  <div class="container" style="max-width:640px;">
+
+    <div id="summaryBanner" class="banner banner-warn">Running checks...</div>
+
+    <div class="check-list" id="checkResults"></div>
+
+    <div class="center" style="margin-top:24px;">
+      <button class="btn btn-outline" id="runChecksBtn" type="button">Run Checks Again</button>
+    </div>
+
+    <p class="form-note center" style="margin-top:20px;">
+      Not signed in as admin? <a href="admin-login.html" style="color:var(--rose-dark); font-weight:600; text-decoration:underline;">Log in</a> first to fully test the Admin Dashboard check below, then come back and run checks again.
+    </p>
+
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/excelExport.js"></script>
+<script src="js/setup-check.js"></script>
+</body>
+</html>

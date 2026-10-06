@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — EasyBeauty</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="find.html">Find a Pro</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="section">
+  <div class="container">
+
+    <div id="configBanner" class="banner banner-warn hidden" style="max-width:440px;margin-left:auto;margin-right:auto;">
+      Supabase isn't configured yet. See <strong>BEGINNER_SETUP_GUIDE.md</strong> to connect the admin dashboard.
+    </div>
+
+    <div class="card auth-card">
+      <h2 class="center" style="margin-bottom:4px;">Admin Login</h2>
+      <p class="center" style="margin-bottom:20px;">EasyBeauty owner access only.</p>
+
+      <div id="loginError" class="banner banner-error hidden"></div>
+
+      <form id="loginForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="adminEmail">Email</label>
+            <input type="email" id="adminEmail" required placeholder="you@easybeauty.com">
+          </div>
+          <div class="field">
+            <label for="adminPassword">Password</label>
+            <input type="password" id="adminPassword" required placeholder="••••••••">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;" id="loginSubmitBtn">Sign In</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/admin-login.js"></script>
+</body>
+</html>

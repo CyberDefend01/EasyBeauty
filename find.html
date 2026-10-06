@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find a Beauty Professional — EasyBeauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="find.html" class="active">Find a Pro</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" style="padding:36px 0 28px;">
+  <div class="container">
+    <h1 style="font-size:clamp(1.5rem,4vw,2.2rem);">Find a Beauty Professional</h1>
+    <p class="lead" style="margin-bottom:0;">Search and filter trusted professionals near you.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:32px;">
+  <div class="container">
+
+    <div class="filter-bar">
+      <div class="field">
+        <label for="searchInput">Search</label>
+        <input type="text" id="searchInput" placeholder="Search by name or keyword...">
+      </div>
+      <div class="field">
+        <label for="serviceSelect">Service</label>
+        <select id="serviceSelect">
+          <option value="">All Services</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="locationSelect">Location</label>
+        <select id="locationSelect">
+          <option value="">All Locations</option>
+        </select>
+      </div>
+      <button class="btn btn-outline" id="resetBtn" type="button">Reset</button>
+    </div>
+
+    <p class="results-count" id="resultsCount"></p>
+    <div class="pro-grid" id="resultsGrid"></div>
+    <div class="empty-state hidden" id="emptyState">
+      <h3>No professionals found</h3>
+      <p>Try a different search term, service or location.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+      <p>Helping women in Nigeria find trusted beauty professionals — starting in Gombe State.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="find.html">Find a Pro</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="signin.html">Sign In</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+  <p class="foot-bottom">© 2026 EasyBeauty. Built as an MVP for validation purposes.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/find.js"></script>
+</body>
+</html>

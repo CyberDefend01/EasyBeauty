@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Give Feedback — EasyBeauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="find.html">Find a Pro</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="feedback.html" class="active">Feedback</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" style="padding:40px 0 24px;">
+  <div class="container">
+    <h1 style="font-size:clamp(1.6rem,4vw,2.3rem);">Give Feedback</h1>
+    <p class="lead" style="margin-bottom:0;">Tell us what's working, what's not, and what you'd like to see next.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:28px;">
+  <div class="container" style="max-width:560px;">
+
+    <div id="configBanner" class="banner banner-warn hidden">
+      EasyBeauty isn't connected to a database yet, so feedback can't be saved right now. If you're the site owner, see <strong>BEGINNER_SETUP_GUIDE.md</strong> to connect Supabase.
+    </div>
+
+    <div class="card" id="feedbackCard">
+      <div id="formWrap">
+        <div id="formError" class="banner banner-error hidden"></div>
+
+        <form id="feedbackForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="fbName">Name</label>
+              <input type="text" id="fbName" required placeholder="e.g. Grace O.">
+            </div>
+            <div class="form-grid cols-2">
+              <div class="field">
+                <label for="fbEmail">Email (optional)</label>
+                <input type="email" id="fbEmail" placeholder="you@example.com">
+              </div>
+              <div class="field">
+                <label for="fbPhone">Phone Number (optional)</label>
+                <input type="tel" id="fbPhone" placeholder="e.g. 08012345678">
+              </div>
+            </div>
+            <div class="field">
+              <label for="fbType">Feedback Type</label>
+              <select id="fbType" required>
+                <option value="General Feedback">General Feedback</option>
+                <option value="Suggestion">Suggestion</option>
+                <option value="Problem/Bug">Problem/Bug</option>
+                <option value="Feature Request">Feature Request</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Rating</label>
+              <div class="star-input" id="starInput">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+              </div>
+              <input type="hidden" id="fbRating" value="5">
+            </div>
+            <div class="field">
+              <label for="fbComment">Feedback / Comment</label>
+              <textarea id="fbComment" rows="4" required placeholder="What should we know?"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:22px;" id="fbSubmitBtn">Submit Feedback</button>
+        </form>
+      </div>
+
+      <div id="successWrap" class="success-box hidden">
+        <div class="confirm-icon">✓</div>
+        <h2>Thank you!</h2>
+        <p>Your feedback has been received and will help us improve EasyBeauty.</p>
+        <div class="hero-actions">
+          <a href="find.html" class="btn btn-primary">Find a Beauty Professional</a>
+          <a href="index.html" class="btn btn-outline">Back to Home</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+      <p>Helping women in Nigeria find trusted beauty professionals — starting in Gombe State.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="find.html">Find a Pro</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="signin.html">Sign In</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+  <p class="foot-bottom">© 2026 EasyBeauty. Built as an MVP for validation purposes.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/feedback.js"></script>
+</body>
+</html>

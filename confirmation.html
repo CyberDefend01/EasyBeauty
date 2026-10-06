@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed — EasyBeauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="find.html">Find a Pro</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="noBooking" class="hidden">
+  <div class="container section center">
+    <h2>No recent booking found</h2>
+    <a href="find.html" class="btn btn-primary">Find a Beauty Professional</a>
+  </div>
+</div>
+
+<div id="confirmContent" class="container hidden">
+  <div class="confirm-box">
+    <div class="confirm-icon">✓</div>
+    <h1>Booking Request Sent!</h1>
+    <p>Thank you, <strong id="cName"></strong>. Your request has been submitted. For the fastest confirmation, message the professional directly on WhatsApp.</p>
+
+    <dl class="confirm-details">
+      <dt>Professional</dt>
+      <dd id="cPro"></dd>
+      <dt>Service</dt>
+      <dd id="cService"></dd>
+      <dt>Preferred Date & Time</dt>
+      <dd id="cDateTime"></dd>
+      <dt>Phone Number</dt>
+      <dd id="cPhone"></dd>
+    </dl>
+
+    <div class="hero-actions">
+      <a href="#" id="cWhatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener">💬 Confirm on WhatsApp</a>
+      <a href="find.html" class="btn btn-outline">Find Another Professional</a>
+    </div>
+
+    <p style="margin-top:28px; font-size:0.9rem;">How was your experience booking on EasyBeauty? <a href="feedback.html" style="color:var(--rose-dark); font-weight:600; text-decoration:underline;">Give Feedback</a></p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div>
+      <a href="index.html" class="logo">Easy<span>Beauty</span></a>
+      <p>Helping women in Nigeria find trusted beauty professionals — starting in Gombe State.</p>
+    </div>
+    <div class="foot-links">
+      <a href="index.html">Home</a>
+      <a href="find.html">Find a Pro</a>
+      <a href="about.html">About</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="signin.html">Sign In</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+  <p class="foot-bottom">© 2026 EasyBeauty. Built as an MVP for validation purposes.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/confirmation.js"></script>
+</body>
+</html>
