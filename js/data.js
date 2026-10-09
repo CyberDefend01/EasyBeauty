@@ -12,7 +12,7 @@ const PROFESSIONALS = [
     priceMin: 5000,
     priceMax: 15000,
     whatsapp: "2348031112201",
-    photo: "https://i.pravatar.cc/300?img=47",
+    photo: "https://images.pexels.com/photos/37874679/pexels-photo-37874679.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/amina1/500/380",
       "https://picsum.photos/seed/amina2/500/380",
@@ -33,7 +33,7 @@ const PROFESSIONALS = [
     priceMin: 10000,
     priceMax: 30000,
     whatsapp: "2348031112202",
-    photo: "https://i.pravatar.cc/300?img=32",
+    photo: "https://images.pexels.com/photos/38272154/pexels-photo-38272154.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/fatima1/500/380",
       "https://picsum.photos/seed/fatima2/500/380",
@@ -54,7 +54,7 @@ const PROFESSIONALS = [
     priceMin: 3000,
     priceMax: 8000,
     whatsapp: "2348031112203",
-    photo: "https://i.pravatar.cc/300?img=44",
+    photo: "https://images.pexels.com/photos/39054377/pexels-photo-39054377.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/hadiza1/500/380",
       "https://picsum.photos/seed/hadiza2/500/380",
@@ -75,7 +75,7 @@ const PROFESSIONALS = [
     priceMin: 4000,
     priceMax: 10000,
     whatsapp: "2348031112204",
-    photo: "https://i.pravatar.cc/300?img=25",
+    photo: "https://images.pexels.com/photos/39816440/pexels-photo-39816440.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/zainab1/500/380",
       "https://picsum.photos/seed/zainab2/500/380",
@@ -96,7 +96,7 @@ const PROFESSIONALS = [
     priceMin: 6000,
     priceMax: 20000,
     whatsapp: "2348031112205",
-    photo: "https://i.pravatar.cc/300?img=48",
+    photo: "https://images.pexels.com/photos/37967692/pexels-photo-37967692.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/blessing1/500/380",
       "https://picsum.photos/seed/blessing2/500/380",
@@ -117,7 +117,7 @@ const PROFESSIONALS = [
     priceMin: 12000,
     priceMax: 35000,
     whatsapp: "2348031112206",
-    photo: "https://i.pravatar.cc/300?img=38",
+    photo: "https://images.pexels.com/photos/34991785/pexels-photo-34991785.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/maryam1/500/380",
       "https://picsum.photos/seed/maryam2/500/380",
@@ -138,7 +138,7 @@ const PROFESSIONALS = [
     priceMin: 3500,
     priceMax: 9000,
     whatsapp: "2348031112207",
-    photo: "https://i.pravatar.cc/300?img=41",
+    photo: "https://images.pexels.com/photos/39134411/pexels-photo-39134411.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/rahama1/500/380",
       "https://picsum.photos/seed/rahama2/500/380",
@@ -159,7 +159,7 @@ const PROFESSIONALS = [
     priceMin: 5000,
     priceMax: 12000,
     whatsapp: "2348031112208",
-    photo: "https://i.pravatar.cc/300?img=29",
+    photo: "https://images.pexels.com/photos/10476512/pexels-photo-10476512.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/chioma1/500/380",
       "https://picsum.photos/seed/chioma2/500/380",
@@ -180,7 +180,7 @@ const PROFESSIONALS = [
     priceMin: 7000,
     priceMax: 18000,
     whatsapp: "2348031112209",
-    photo: "https://i.pravatar.cc/300?img=45",
+    photo: "https://images.pexels.com/photos/39134398/pexels-photo-39134398.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/halima1/500/380",
       "https://picsum.photos/seed/halima2/500/380",
@@ -201,7 +201,7 @@ const PROFESSIONALS = [
     priceMin: 8000,
     priceMax: 25000,
     whatsapp: "2348031112210",
-    photo: "https://i.pravatar.cc/300?img=36",
+    photo: "https://images.pexels.com/photos/37864840/pexels-photo-37864840.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
     portfolio: [
       "https://picsum.photos/seed/grace1/500/380",
       "https://picsum.photos/seed/grace2/500/380",
