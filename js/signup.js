@@ -58,11 +58,10 @@ signupForm.addEventListener("submit", async (e) => {
     return;
   }
 
-  const { data, error } = await supabase
-    .from("users")
-    .insert(record)
-    .select()
-    .single();
+  // Note: no .select() here — only admins can read rows back (RLS), and
+  // regular users only have permission to write their own sign-up, not
+  // read it back. Asking for the row back would make this insert fail.
+  const { error } = await supabase.from("users").insert(record);
 
   signupSubmitBtn.disabled = false;
   signupSubmitBtn.textContent = "Create Account";
@@ -83,7 +82,7 @@ signupForm.addEventListener("submit", async (e) => {
     email: record.email,
     phone: record.phone,
     user_type: record.user_type,
-    created_at: data.created_at
+    created_at: new Date().toISOString()
   });
 
   const welcome = record.user_type === "professional"

@@ -68,11 +68,10 @@ feedbackForm.addEventListener("submit", async (e) => {
   fbSubmitBtn.disabled = true;
   fbSubmitBtn.textContent = "Submitting...";
 
-  const { data, error } = await supabase
-    .from("feedback")
-    .insert(record)
-    .select()
-    .single();
+  // Note: no .select() here — only admins can read feedback back (RLS),
+  // so asking for the inserted row would make this insert fail even
+  // though the write itself is allowed.
+  const { error } = await supabase.from("feedback").insert(record);
 
   fbSubmitBtn.disabled = false;
   fbSubmitBtn.textContent = "Submit Feedback";
@@ -94,7 +93,7 @@ feedbackForm.addEventListener("submit", async (e) => {
     feedback_type: record.feedback_type,
     rating: record.rating,
     comment: record.comment,
-    created_at: data.created_at
+    created_at: new Date().toISOString()
   });
 
   document.getElementById("formWrap").classList.add("hidden");
