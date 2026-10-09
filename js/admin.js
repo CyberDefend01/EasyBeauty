@@ -1,5 +1,5 @@
-/* Admin Dashboard logic — guarded by Supabase Auth, reads users and
-   feedback via RLS policies that only allow authenticated selects. */
+/* Admin Dashboard logic — guarded by Supabase Auth, reads/deletes users
+   and feedback via RLS policies that only allow it for admins. */
 
 function escapeHTML(str) {
   const div = document.createElement("div");
@@ -49,7 +49,7 @@ function showError(message) {
     return;
   }
 
-  const [{ data: users, error: usersError }, { data: feedback, error: feedbackError }] = await Promise.all([
+  const [{ data: usersData, error: usersError }, { data: feedbackData, error: feedbackError }] = await Promise.all([
     supabase.from("users").select("*").order("created_at", { ascending: false }),
     supabase.from("feedback").select("*").order("created_at", { ascending: false })
   ]);
@@ -60,47 +60,106 @@ function showError(message) {
     return;
   }
 
-  const customers = users.filter(u => u.user_type === "customer");
-  const professionals = users.filter(u => u.user_type === "professional");
-  const avgRating = feedback.length
-    ? (feedback.reduce((sum, f) => sum + Number(f.rating), 0) / feedback.length).toFixed(1)
-    : "—";
+  let users = usersData;
+  let feedback = feedbackData;
 
-  document.getElementById("statTotalUsers").textContent = users.length;
-  document.getElementById("statCustomers").textContent = customers.length;
-  document.getElementById("statProfessionals").textContent = professionals.length;
-  document.getElementById("statFeedback").textContent = feedback.length;
-  document.getElementById("statAvgRating").textContent = avgRating;
+  function renderStats() {
+    const customers = users.filter(u => u.user_type === "customer");
+    const professionals = users.filter(u => u.user_type === "professional");
+    const avgRating = feedback.length
+      ? (feedback.reduce((sum, f) => sum + Number(f.rating), 0) / feedback.length).toFixed(1)
+      : "—";
 
-  const usersBody = document.getElementById("usersTableBody");
-  if (users.length) {
-    usersBody.innerHTML = users.map(u => `
-      <tr>
-        <td>${escapeHTML(u.full_name)}</td>
-        <td>${escapeHTML(u.email)}</td>
-        <td>${escapeHTML(u.phone)}</td>
-        <td><span class="tag-pill">${u.user_type === "professional" ? "Beauty Professional" : "Customer"}</span></td>
-        <td>${formatDate(u.created_at)}</td>
-      </tr>
-    `).join("");
-  } else {
-    document.getElementById("usersEmptyState").style.display = "block";
+    document.getElementById("statTotalUsers").textContent = users.length;
+    document.getElementById("statCustomers").textContent = customers.length;
+    document.getElementById("statProfessionals").textContent = professionals.length;
+    document.getElementById("statFeedback").textContent = feedback.length;
+    document.getElementById("statAvgRating").textContent = avgRating;
   }
 
-  const feedbackBody = document.getElementById("feedbackTableBody");
-  if (feedback.length) {
-    feedbackBody.innerHTML = feedback.map(f => `
-      <tr>
-        <td>${escapeHTML(f.name)}</td>
-        <td><span class="tag-pill">${escapeHTML(f.feedback_type)}</span></td>
-        <td>${"★".repeat(f.rating)}${"☆".repeat(5 - f.rating)}</td>
-        <td class="wrap">${escapeHTML(f.comment)}</td>
-        <td>${formatDate(f.created_at)}</td>
-      </tr>
-    `).join("");
-  } else {
-    document.getElementById("feedbackEmptyState").style.display = "block";
+  function renderUsers() {
+    const usersBody = document.getElementById("usersTableBody");
+    const emptyState = document.getElementById("usersEmptyState");
+    if (users.length) {
+      emptyState.style.display = "none";
+      usersBody.innerHTML = users.map(u => `
+        <tr>
+          <td>${escapeHTML(u.full_name)}</td>
+          <td>${escapeHTML(u.email)}</td>
+          <td>${escapeHTML(u.phone)}</td>
+          <td><span class="tag-pill">${u.user_type === "professional" ? "Beauty Professional" : "Customer"}</span></td>
+          <td>${formatDate(u.created_at)}</td>
+          <td><button class="btn-danger-text" type="button" data-delete-user="${u.id}">Delete</button></td>
+        </tr>
+      `).join("");
+    } else {
+      usersBody.innerHTML = "";
+      emptyState.style.display = "block";
+    }
   }
+
+  function renderFeedback() {
+    const feedbackBody = document.getElementById("feedbackTableBody");
+    const emptyState = document.getElementById("feedbackEmptyState");
+    if (feedback.length) {
+      emptyState.style.display = "none";
+      feedbackBody.innerHTML = feedback.map(f => `
+        <tr>
+          <td>${escapeHTML(f.name)}</td>
+          <td><span class="tag-pill">${escapeHTML(f.feedback_type)}</span></td>
+          <td>${"★".repeat(f.rating)}${"☆".repeat(5 - f.rating)}</td>
+          <td class="wrap">${escapeHTML(f.comment)}</td>
+          <td>${formatDate(f.created_at)}</td>
+          <td><button class="btn-danger-text" type="button" data-delete-feedback="${f.id}">Delete</button></td>
+        </tr>
+      `).join("");
+    } else {
+      feedbackBody.innerHTML = "";
+      emptyState.style.display = "block";
+    }
+  }
+
+  document.getElementById("usersTableBody").addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-delete-user]");
+    if (!btn) return;
+    const id = btn.dataset.deleteUser;
+    const row = users.find(u => u.id === id);
+    if (!confirm(`Delete the sign-up for ${row ? row.full_name : "this user"}? This can't be undone.`)) return;
+
+    btn.disabled = true;
+    btn.textContent = "Deleting...";
+    const { error } = await supabase.from("users").delete().eq("id", id);
+    if (error) {
+      alert("Couldn't delete: " + error.message);
+      btn.disabled = false;
+      btn.textContent = "Delete";
+      return;
+    }
+    users = users.filter(u => u.id !== id);
+    renderStats();
+    renderUsers();
+  });
+
+  document.getElementById("feedbackTableBody").addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-delete-feedback]");
+    if (!btn) return;
+    const id = btn.dataset.deleteFeedback;
+    const row = feedback.find(f => f.id === id);
+    if (!confirm(`Delete this feedback from ${row ? row.name : "this person"}? This can't be undone.`)) return;
+
+    btn.disabled = true;
+    btn.textContent = "Deleting...";
+    const { error } = await supabase.from("feedback").delete().eq("id", id);
+    if (error) {
+      alert("Couldn't delete: " + error.message);
+      btn.disabled = false;
+      btn.textContent = "Delete";
+      return;
+    }
+    feedback = feedback.filter(f => f.id !== id);
+    renderStats();
+    renderFeedback();
+  });
 
   function requireExcel() {
     if (isExcelExportReady()) return true;
@@ -122,6 +181,10 @@ function showError(message) {
     if (!requireExcel()) return;
     downloadAllDataExcel(users, feedback);
   });
+
+  renderStats();
+  renderUsers();
+  renderFeedback();
 
   document.getElementById("loadingState").classList.add("hidden");
   document.getElementById("dashboardContent").classList.remove("hidden");

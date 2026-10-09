@@ -84,8 +84,18 @@ create policy "Admins can read feedback" on public.feedback
   to authenticated
   using (public.is_admin());
 
--- No update/delete policies are created, so nobody can modify or delete
--- rows through the app. Corrections are made in the Supabase Table Editor.
+-- Only admins can delete rows (from the Admin Dashboard or Table Editor).
+-- No update policies exist — nobody can edit a row's contents, only
+-- remove it entirely, which keeps the remaining data trustworthy.
+create policy "Admins can delete users" on public.users
+  for delete
+  to authenticated
+  using (public.is_admin());
+
+create policy "Admins can delete feedback" on public.feedback
+  for delete
+  to authenticated
+  using (public.is_admin());
 
 -- ===== Setup-check helper functions =====
 -- These insert a throwaway row and then force a rollback, so the setup

@@ -63,8 +63,7 @@ website.
 ```sql
 -- EasyBeauty — Supabase schema
 -- Run this once in Supabase Dashboard → SQL Editor → New query.
--- See BEGINNER_SETUP_GUIDE.md for the full walkthrough (this exact file
--- is also pasted inline there, so you don't need to open this file at all).
+-- See BEGINNER_SETUP_GUIDE.md for the full walkthrough.
 
 create extension if not exists pgcrypto;
 
@@ -93,30 +92,35 @@ create table if not exists public.feedback (
 );
 
 -- ===== Row Level Security =====
--- The frontend uses Supabase's public "anon" key. RLS is what actually
--- protects the data: anyone can INSERT a sign-up or feedback row (that's
--- the point — it's a public form), but only a signed-in admin can SELECT
--- (read) the rows back, which is what powers the admin dashboard.
-
 alter table public.users enable row level security;
 alter table public.feedback enable row level security;
 
+-- Anyone (not signed in) can sign up — that's how a visitor gets an
+-- account in the first place.
 create policy "Public can sign up" on public.users
   for insert
   to anon
   with check (true);
 
-create policy "Public can submit feedback" on public.feedback
+-- Feedback requires being signed in. There is no anon insert policy here
+-- on purpose, so the database itself enforces this, not just the UI.
+create policy "Signed-in users can sign up" on public.users
   for insert
-  to anon
+  to authenticated
+  with check (true);
+
+create policy "Signed-in users can submit feedback" on public.feedback
+  for insert
+  to authenticated
   with check (true);
 
 -- Admin read access is granted only to emails listed in public.admins.
--- Add your admin email with: insert into public.admins (email) values ('you@example.com');
 create table if not exists public.admins (
   email text primary key
 );
 alter table public.admins enable row level security;
+
+-- Add your admin email with: insert into public.admins (email) values ('you@example.com');
 
 create or replace function public.is_admin()
 returns boolean
@@ -143,20 +147,23 @@ create policy "Admins can read feedback" on public.feedback
   to authenticated
   using (public.is_admin());
 
--- No update/delete policies are created, so nobody (not even an admin
--- signed in through the anon key) can modify or delete rows through the
--- app — that keeps the collected validation data tamper-proof by default.
--- If you need to correct a record, do it from the Supabase Table Editor.
+-- Only admins can delete rows (from the Admin Dashboard or Table Editor).
+-- No update policies exist — nobody can edit a row's contents, only
+-- remove it entirely, which keeps the remaining data trustworthy.
+create policy "Admins can delete users" on public.users
+  for delete
+  to authenticated
+  using (public.is_admin());
+
+create policy "Admins can delete feedback" on public.feedback
+  for delete
+  to authenticated
+  using (public.is_admin());
 
 -- ===== Setup-check helper functions =====
--- setup-check.html uses these to prove sign-up/feedback inserts actually
--- work, WITHOUT ever leaving a fake record behind. Each function inserts a
--- throwaway test row, then deliberately raises its own error to force
--- Postgres to roll that insert back before the function returns — this is
--- a standard, safe Postgres pattern (an exception block creates an
--- implicit savepoint). If the insert itself is rejected by RLS or a
--- missing table, that real error is re-raised so the check correctly
--- reports a failure instead of a false pass.
+-- These insert a throwaway row and then force a rollback, so the setup
+-- check never leaves fake data behind. A real RLS or missing-table error
+-- is re-raised so the check reports a failure instead of a false pass.
 
 create or replace function public.check_users_insert()
 returns boolean
@@ -196,8 +203,8 @@ exception
 end;
 $$;
 
-grant execute on function public.check_users_insert() to anon;
-grant execute on function public.check_feedback_insert() to anon;
+grant execute on function public.check_users_insert() to anon, authenticated;
+grant execute on function public.check_feedback_insert() to authenticated;
 ```
 
 > **What does this do?** It creates two tables — one for sign-ups, one for

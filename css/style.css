@@ -88,6 +88,18 @@ ul { list-style: none; margin: 0; padding: 0; }
 .btn-block { width: 100%; }
 .btn-sm { padding: 9px 18px; font-size: 0.85rem; }
 
+.btn-danger-text {
+  background: transparent;
+  border: none;
+  color: #b42318;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 999px;
+}
+.btn-danger-text:hover { background: #fde8e8; }
+
 /* ===== Navbar ===== */
 .navbar {
   position: sticky;
