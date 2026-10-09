@@ -32,18 +32,15 @@ create table if not exists public.feedback (
 alter table public.users enable row level security;
 alter table public.feedback enable row level security;
 
--- Anyone (not signed in) can submit a sign-up or feedback form.
+-- Anyone (not signed in) can sign up — that's how a visitor gets an
+-- account in the first place.
 create policy "Public can sign up" on public.users
   for insert
   to anon
   with check (true);
 
-create policy "Public can submit feedback" on public.feedback
-  for insert
-  to anon
-  with check (true);
-
--- Signed-in customers (password accounts) can also submit these forms.
+-- Feedback requires being signed in. There is no anon insert policy here
+-- on purpose, so the database itself enforces this, not just the UI.
 create policy "Signed-in users can sign up" on public.users
   for insert
   to authenticated
@@ -134,4 +131,4 @@ end;
 $$;
 
 grant execute on function public.check_users_insert() to anon, authenticated;
-grant execute on function public.check_feedback_insert() to anon, authenticated;
+grant execute on function public.check_feedback_insert() to authenticated;

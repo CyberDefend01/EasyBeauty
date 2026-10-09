@@ -120,8 +120,20 @@ async function checkTable(tableName, label) {
   };
 }
 
-async function checkInsert(rpcName, label) {
+async function checkInsert(rpcName, label, requireLogin) {
   const supabase = getSupabase();
+
+  if (requireLogin) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      return {
+        status: "warn",
+        title: label,
+        detail: 'Feedback now requires signing in, so this can\'t be tested while signed out. <a href="signin.html">Sign in</a>, then run checks again.'
+      };
+    }
+  }
+
   const { data, error } = await supabase.rpc(rpcName);
 
   if (error) {
@@ -131,7 +143,7 @@ async function checkInsert(rpcName, label) {
       title: label,
       detail: missingFn
         ? "The setup-check SQL functions are missing. Re-copy the full SQL from Step 5 (it includes them) and run it again."
-        : `Insert check failed: ${error.message}. Check the "Public can sign up / submit feedback" RLS policy from Step 5.`
+        : `Insert check failed: ${error.message}. Check the RLS insert policy for this table.`
     };
   }
   return {
@@ -237,8 +249,8 @@ async function runAllChecks() {
   const [usersTable, feedbackTable, usersInsert, feedbackInsert, adminCheck] = await Promise.all([
     checkTable("users", "users"),
     checkTable("feedback", "feedback"),
-    checkInsert("check_users_insert", "Can a test signup be submitted?"),
-    checkInsert("check_feedback_insert", "Can feedback be submitted?"),
+    checkInsert("check_users_insert", "Can a test signup be submitted?", false),
+    checkInsert("check_feedback_insert", "Can feedback be submitted?", true),
     checkAdminDashboard()
   ]);
 

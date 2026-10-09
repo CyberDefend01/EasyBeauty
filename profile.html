@@ -17,7 +17,7 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="find.html">Find a Pro</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="feedback.html">Feedback</a></li>
+      <li class="feedback-link hidden"><a href="feedback.html" class="feedback-link hidden">Feedback</a></li>
       <li><a href="signin.html">Sign In</a></li>
       <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
     </ul>
@@ -117,7 +117,7 @@
       <a href="index.html">Home</a>
       <a href="find.html">Find a Pro</a>
       <a href="about.html">About</a>
-      <a href="feedback.html">Feedback</a>
+      <a href="feedback.html" class="feedback-link hidden">Feedback</a>
       <a href="signin.html">Sign In</a>
       <a href="signup.html">Sign Up</a>
     </div>
@@ -125,6 +125,10 @@
   <p class="foot-bottom">© 2026 EasyBeauty. Built as an MVP for validation purposes.</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/navAuth.js"></script>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 <script src="js/profile.js"></script>

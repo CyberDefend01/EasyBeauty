@@ -7,8 +7,27 @@ const fbFormError = document.getElementById("formError");
 const fbStars = document.querySelectorAll("#starInput .star");
 const fbRatingInput = document.getElementById("fbRating");
 
+const viewSignInRequired = document.getElementById("viewSignInRequired");
+const formWrap = document.getElementById("formWrap");
+
 if (!isSupabaseConfigured()) {
   document.getElementById("configBanner").classList.remove("hidden");
+} else {
+  const supabase = getSupabase();
+
+  async function gateOnAuth() {
+    const { data: { session } } = await supabase.auth.getSession();
+    const signedIn = !!session;
+    viewSignInRequired.classList.toggle("hidden", signedIn);
+    formWrap.classList.toggle("hidden", !signedIn);
+    if (signedIn && session.user.email) {
+      const emailField = document.getElementById("fbEmail");
+      if (!emailField.value) emailField.value = session.user.email;
+    }
+  }
+
+  supabase.auth.onAuthStateChange(() => gateOnAuth());
+  gateOnAuth();
 }
 
 function paintFbStars(value) {
@@ -59,7 +78,11 @@ feedbackForm.addEventListener("submit", async (e) => {
   fbSubmitBtn.textContent = "Submit Feedback";
 
   if (error) {
-    showFbError("Something went wrong submitting your feedback. Please try again.");
+    if (error.code === "42501" || /row-level security/i.test(error.message || "")) {
+      showFbError("You need to be signed in to submit feedback. Please sign in and try again.");
+    } else {
+      showFbError("Something went wrong submitting your feedback. Please try again.");
+    }
     console.error("Supabase feedback error:", error);
     return;
   }
