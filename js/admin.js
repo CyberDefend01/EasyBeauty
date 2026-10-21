@@ -167,19 +167,25 @@ function showError(message) {
     return false;
   }
 
+  // Masking only changes what's written into the downloaded file — the
+  // on-screen table always shows real emails.
+  function askToMaskEmails() {
+    return confirm("Mask part of each email in this export? (e.g. am***@gmail.com)\n\nOK = mask emails\nCancel = export full emails");
+  }
+
   document.getElementById("exportUsersBtn").addEventListener("click", () => {
     if (!requireExcel()) return;
-    downloadUsersExcel(users);
+    downloadUsersExcel(users, askToMaskEmails());
   });
 
   document.getElementById("exportFeedbackBtn").addEventListener("click", () => {
     if (!requireExcel()) return;
-    downloadFeedbackExcel(feedback);
+    downloadFeedbackExcel(feedback, askToMaskEmails());
   });
 
   document.getElementById("exportAllBtn").addEventListener("click", () => {
     if (!requireExcel()) return;
-    downloadAllDataExcel(users, feedback);
+    downloadAllDataExcel(users, feedback, askToMaskEmails());
   });
 
   renderStats();
