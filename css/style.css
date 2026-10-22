@@ -618,7 +618,7 @@ footer .foot-links a:hover { color: var(--gold); }
   margin-bottom: 32px;
 }
 @media (min-width: 720px) {
-  .stat-grid { grid-template-columns: repeat(5, 1fr); }
+  .stat-grid { grid-template-columns: repeat(3, 1fr); }
 }
 .stat-card {
   background: var(--white);

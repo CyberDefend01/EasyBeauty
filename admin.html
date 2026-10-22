@@ -61,6 +61,10 @@
           <div class="value" id="statAvgRating">—</div>
           <div class="label">Average Feedback Rating</div>
         </div>
+        <div class="stat-card">
+          <div class="value" id="statWaitlist">0</div>
+          <div class="label">Waitlist Signups</div>
+        </div>
       </div>
 
       <div class="admin-section-head">
@@ -103,6 +107,27 @@
           <tbody id="feedbackTableBody"></tbody>
         </table>
         <p class="center" id="feedbackEmptyState" style="padding:24px; margin:0; display:none;">No feedback yet.</p>
+      </div>
+
+      <div class="admin-section-head">
+        <h2 style="margin:0;">Waitlist</h2>
+        <button class="btn btn-outline btn-sm" id="exportWaitlistBtn" type="button">Export Waitlist to Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>User Type</th>
+              <th>Date Joined</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="waitlistTableBody"></tbody>
+        </table>
+        <p class="center" id="waitlistEmptyState" style="padding:24px; margin:0; display:none;">No one on the waitlist yet.</p>
       </div>
 
     </div>

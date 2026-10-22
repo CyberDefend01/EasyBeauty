@@ -49,19 +49,25 @@ function showError(message) {
     return;
   }
 
-  const [{ data: usersData, error: usersError }, { data: feedbackData, error: feedbackError }] = await Promise.all([
+  const [
+    { data: usersData, error: usersError },
+    { data: feedbackData, error: feedbackError },
+    { data: waitlistData, error: waitlistError }
+  ] = await Promise.all([
     supabase.from("users").select("*").order("created_at", { ascending: false }),
-    supabase.from("feedback").select("*").order("created_at", { ascending: false })
+    supabase.from("feedback").select("*").order("created_at", { ascending: false }),
+    supabase.from("waitlist").select("*").order("created_at", { ascending: false })
   ]);
 
-  if (usersError || feedbackError) {
-    console.error(usersError || feedbackError);
+  if (usersError || feedbackError || waitlistError) {
+    console.error(usersError || feedbackError || waitlistError);
     showError("Couldn't load dashboard data. Check that your Supabase RLS policies allow authenticated reads (see BEGINNER_SETUP_GUIDE.md).");
     return;
   }
 
   let users = usersData;
   let feedback = feedbackData;
+  let waitlist = waitlistData;
 
   function renderStats() {
     const customers = users.filter(u => u.user_type === "customer");
@@ -75,6 +81,7 @@ function showError(message) {
     document.getElementById("statProfessionals").textContent = professionals.length;
     document.getElementById("statFeedback").textContent = feedback.length;
     document.getElementById("statAvgRating").textContent = avgRating;
+    document.getElementById("statWaitlist").textContent = waitlist.length;
   }
 
   function renderUsers() {
@@ -115,6 +122,27 @@ function showError(message) {
       `).join("");
     } else {
       feedbackBody.innerHTML = "";
+      emptyState.style.display = "block";
+    }
+  }
+
+  function renderWaitlist() {
+    const waitlistBody = document.getElementById("waitlistTableBody");
+    const emptyState = document.getElementById("waitlistEmptyState");
+    if (waitlist.length) {
+      emptyState.style.display = "none";
+      waitlistBody.innerHTML = waitlist.map(w => `
+        <tr>
+          <td>${escapeHTML(w.full_name)}</td>
+          <td>${escapeHTML(w.email)}</td>
+          <td>${escapeHTML(w.phone)}</td>
+          <td><span class="tag-pill">${w.user_type === "professional" ? "Beauty Professional" : "Customer"}</span></td>
+          <td>${formatDate(w.created_at)}</td>
+          <td><button class="btn-danger-text" type="button" data-delete-waitlist="${w.id}">Delete</button></td>
+        </tr>
+      `).join("");
+    } else {
+      waitlistBody.innerHTML = "";
       emptyState.style.display = "block";
     }
   }
@@ -161,6 +189,27 @@ function showError(message) {
     renderFeedback();
   });
 
+  document.getElementById("waitlistTableBody").addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-delete-waitlist]");
+    if (!btn) return;
+    const id = btn.dataset.deleteWaitlist;
+    const row = waitlist.find(w => w.id === id);
+    if (!confirm(`Remove ${row ? row.full_name : "this person"} from the waitlist? This can't be undone.`)) return;
+
+    btn.disabled = true;
+    btn.textContent = "Deleting...";
+    const { error } = await supabase.from("waitlist").delete().eq("id", id);
+    if (error) {
+      alert("Couldn't delete: " + error.message);
+      btn.disabled = false;
+      btn.textContent = "Delete";
+      return;
+    }
+    waitlist = waitlist.filter(w => w.id !== id);
+    renderStats();
+    renderWaitlist();
+  });
+
   function requireExcel() {
     if (isExcelExportReady()) return true;
     alert("Excel export couldn't load (probably a network issue). Please check your internet connection and reload the page.");
@@ -183,14 +232,20 @@ function showError(message) {
     downloadFeedbackExcel(feedback, askToMaskEmails());
   });
 
+  document.getElementById("exportWaitlistBtn").addEventListener("click", () => {
+    if (!requireExcel()) return;
+    downloadWaitlistExcel(waitlist, askToMaskEmails());
+  });
+
   document.getElementById("exportAllBtn").addEventListener("click", () => {
     if (!requireExcel()) return;
-    downloadAllDataExcel(users, feedback, askToMaskEmails());
+    downloadAllDataExcel(users, feedback, waitlist, askToMaskEmails());
   });
 
   renderStats();
   renderUsers();
   renderFeedback();
+  renderWaitlist();
 
   document.getElementById("loadingState").classList.add("hidden");
   document.getElementById("dashboardContent").classList.remove("hidden");

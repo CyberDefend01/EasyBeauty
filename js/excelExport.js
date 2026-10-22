@@ -56,6 +56,14 @@ const FEEDBACK_COLUMNS = [
   { label: "Date Submitted", get: f => new Date(f.created_at).toLocaleString("en-NG") }
 ];
 
+const WAITLIST_COLUMNS = [
+  { label: "Full Name", get: w => w.full_name },
+  { label: "Email", get: w => w.email },
+  { label: "Phone", get: w => w.phone || "" },
+  { label: "User Type", get: w => (w.user_type === "professional" ? "Beauty Professional" : "Customer") },
+  { label: "Date Joined", get: w => new Date(w.created_at).toLocaleString("en-NG") }
+];
+
 function downloadUsersExcel(users, maskEmails) {
   const rows = maskEmails ? applyEmailMask(users) : users;
   const wb = XLSX.utils.book_new();
@@ -70,11 +78,20 @@ function downloadFeedbackExcel(feedback, maskEmails) {
   XLSX.writeFile(wb, `easybeauty-feedback-${new Date().toISOString().slice(0, 10)}.xlsx`);
 }
 
-function downloadAllDataExcel(users, feedback, maskEmails) {
+function downloadWaitlistExcel(waitlist, maskEmails) {
+  const rows = maskEmails ? applyEmailMask(waitlist) : waitlist;
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, rowsToSheet(rows, WAITLIST_COLUMNS), "Waitlist");
+  XLSX.writeFile(wb, `easybeauty-waitlist-${new Date().toISOString().slice(0, 10)}.xlsx`);
+}
+
+function downloadAllDataExcel(users, feedback, waitlist, maskEmails) {
   const userRows = maskEmails ? applyEmailMask(users) : users;
   const feedbackRows = maskEmails ? applyEmailMask(feedback) : feedback;
+  const waitlistRows = maskEmails ? applyEmailMask(waitlist) : waitlist;
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, rowsToSheet(userRows, USERS_COLUMNS), "Users");
   XLSX.utils.book_append_sheet(wb, rowsToSheet(feedbackRows, FEEDBACK_COLUMNS), "Feedback");
+  XLSX.utils.book_append_sheet(wb, rowsToSheet(waitlistRows, WAITLIST_COLUMNS), "Waitlist");
   XLSX.writeFile(wb, `easybeauty-validation-data-${new Date().toISOString().slice(0, 10)}.xlsx`);
 }

@@ -39,7 +39,7 @@ function renderSummary(items) {
     summaryEl.textContent = "Mostly working — check the ⚠️ items below.";
   } else {
     summaryEl.className = "banner banner-ok";
-    summaryEl.textContent = "Everything is working! Sign-ups, feedback, the Admin Dashboard and Excel export are all connected correctly.";
+    summaryEl.textContent = "Everything is working! Sign-ups, feedback, the waitlist, the Admin Dashboard and Excel export are all connected correctly.";
   }
 }
 
@@ -183,22 +183,23 @@ async function checkAdminDashboard() {
     };
   }
 
-  const [{ error: usersError }, { error: feedbackError }] = await Promise.all([
+  const [{ error: usersError }, { error: feedbackError }, { error: waitlistError }] = await Promise.all([
     supabase.from("users").select("id", { count: "exact", head: true }),
-    supabase.from("feedback").select("id", { count: "exact", head: true })
+    supabase.from("feedback").select("id", { count: "exact", head: true }),
+    supabase.from("waitlist").select("id", { count: "exact", head: true })
   ]);
 
-  if (usersError || feedbackError) {
+  if (usersError || feedbackError || waitlistError) {
     return {
       status: "fail",
       title: "Can the admin dashboard retrieve data?",
-      detail: `Logged in, but reading data failed: ${(usersError || feedbackError).message}`
+      detail: `Logged in, but reading data failed: ${(usersError || feedbackError || waitlistError).message}`
     };
   }
   return {
     status: "ok",
     title: "Can the admin dashboard retrieve data?",
-    detail: "You're logged in as admin and the dashboard can read both tables."
+    detail: "You're logged in as admin and the dashboard can read all three tables."
   };
 }
 
@@ -220,8 +221,10 @@ async function runAllChecks() {
     "Is Supabase connected?",
     "Is the users table available?",
     "Is the feedback table available?",
+    "Is the waitlist table available?",
     "Can a test signup be submitted?",
     "Can feedback be submitted?",
+    "Can a waitlist join be submitted?",
     "Can the admin dashboard retrieve data?",
     "Is Excel export working?"
   ];
@@ -246,20 +249,24 @@ async function runAllChecks() {
     return;
   }
 
-  const [usersTable, feedbackTable, usersInsert, feedbackInsert, adminCheck] = await Promise.all([
+  const [usersTable, feedbackTable, waitlistTable, usersInsert, feedbackInsert, waitlistInsert, adminCheck] = await Promise.all([
     checkTable("users", "users"),
     checkTable("feedback", "feedback"),
+    checkTable("waitlist", "waitlist"),
     checkInsert("check_users_insert", "Can a test signup be submitted?", false),
     checkInsert("check_feedback_insert", "Can feedback be submitted?", true),
+    checkInsert("check_waitlist_insert", "Can a waitlist join be submitted?", false),
     checkAdminDashboard()
   ]);
 
   items[1] = usersTable;
   items[2] = feedbackTable;
-  items[3] = usersInsert;
-  items[4] = feedbackInsert;
-  items[5] = adminCheck;
-  items[6] = checkExcel();
+  items[3] = waitlistTable;
+  items[4] = usersInsert;
+  items[5] = feedbackInsert;
+  items[6] = waitlistInsert;
+  items[7] = adminCheck;
+  items[8] = checkExcel();
 
   renderResults(items);
   renderSummary(items);
